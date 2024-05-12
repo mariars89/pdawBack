@@ -26,6 +26,11 @@ import com.dawes.pdaw_Maria_Rosete.servicios.ServicioUsuario;
 
 import jakarta.validation.Valid;
 
+/**
+ * Controlador REST para gestionar los usuarios.
+ * 
+ * @author Maria Rosete
+ */
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioWS {
@@ -36,6 +41,13 @@ public class UsuarioWS {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
    
+    /**
+     * Metodo para autenticar a un usuario.
+     * 
+     * @param usuarioLogin DTO con las credenciales del usuario.
+     * @param bindingResult Resultado de la validacion del DTO.
+     * @return ResponseEntity con el token de autenticacion y otros datos del usuario.
+     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody UsuarioLoginDTO usuarioLogin, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -47,30 +59,42 @@ public class UsuarioWS {
             Map<String, Object> response = new HashMap<>();
             response.put("token", usuarioDTO.getToken());
             response.put("idUsuario", usuarioDTO.getId());
-            response.put("rol", usuarioDTO.getRol()); // Agregar el rol del usuario a la respuesta JSON
+            response.put("rol", usuarioDTO.getRol()); 
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
         }
     }
 
-
+    /**
+     * Metodo para insertar un nuevo usuario.
+     * 
+     * @param usuario DTO con los datos del usuario a insertar.
+     * @param validaciones Resultado de la validacion del DTO.
+     * @return ResponseEntity con el usuario creado o un mensaje de error.
+     * @throws Exception Si ocurre un error durante la creacion del usuario.
+     */
     @PostMapping("/insertar")
     public ResponseEntity<?> insertar(@Valid @RequestBody UsuarioDTO usuario, BindingResult validaciones)
-			throws Exception {
+            throws Exception {
 
-		if (validaciones.hasErrors()) {
-			return new ResponseEntity<String>("Campos Imcompletos", HttpStatus.BAD_REQUEST);
-		}
-		
-		try {
-			return new ResponseEntity<UsuarioDTO>(su.crear(usuario), HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
+        if (validaciones.hasErrors()) {
+            return new ResponseEntity<String>("Campos Imcompletos", HttpStatus.BAD_REQUEST);
+        }
+        
+        try {
+            return new ResponseEntity<UsuarioDTO>(su.crear(usuario), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     
+    /**
+     * Metodo para eliminar un usuario por su ID.
+     * 
+     * @param idusuario El ID del usuario a eliminar.
+     * @return ResponseEntity con el resultado de la operacion.
+     */
     @DeleteMapping("/eliminar/{idusuario}")
     @PreAuthorize("hasAuthority('ADMINISTRADOR')")
     public ResponseEntity<?> eliminar(@PathVariable Integer idusuario){
@@ -87,12 +111,18 @@ public class UsuarioWS {
         }
     }
 
-    
+    /**
+     * Metodo para modificar un usuario.
+     * 
+     * @param usuario El usuario con los datos actualizados.
+     * @param idusuario El ID del usuario a modificar.
+     * @return ResponseEntity con el usuario modificado o un mensaje de error.
+     */
     @PutMapping("/modificar/{idusuario}")
     @PreAuthorize("hasAnyAuthority('ADMINISTRADOR', 'REGISTRADO')")
     public ResponseEntity<?> modificar(@RequestBody UsuarioVO usuario, @PathVariable Integer idusuario) {
         
-    	Optional<UsuarioVO> usuarioToUpdate = su.findById(idusuario);
+        Optional<UsuarioVO> usuarioToUpdate = su.findById(idusuario);
         UsuarioVO updatedUsuario;
         Map<String, Object> response = new HashMap<>();
 
@@ -107,9 +137,9 @@ public class UsuarioWS {
             updatedUsuario.setCorreo(usuario.getCorreo());
             updatedUsuario.setRol(usuario.getRol()); 
 
-            // Encriptar la contraseña
-            String contraseñaEncriptada = passwordEncoder.encode(usuario.getPassword());
-            updatedUsuario.setPassword(contraseñaEncriptada);
+            // Encriptar la contrasena
+            String contrasenaEncriptada = passwordEncoder.encode(usuario.getPassword());
+            updatedUsuario.setPassword(contrasenaEncriptada);
 
             updatedUsuario = su.save(updatedUsuario);
             return ResponseEntity.ok(updatedUsuario);
@@ -119,25 +149,41 @@ public class UsuarioWS {
         }
     }
 
-	    private ResponseEntity<?> errorResponse(String message, HttpStatus status) {
-	        Map<String, Object> response = new HashMap<>();
-	        response.put("message", message);
-	        return new ResponseEntity<>(response, status);
-	    }
-
-  /******************************************************************************************************************************/  
+    /**
+     * Metodo para obtener la lista de todos los usuarios.
+     * 
+     * @return Iterable con la lista de todos los usuarios.
+     */
     @GetMapping("/buscarUsuarios")
     @PreAuthorize("hasAnyAuthority('REGISTRADO', 'ADMINISTRADOR')")
-    
     public Iterable listaUsuarios(){
         return su.findAll();
     }
     
+    /**
+     * Metodo para buscar un usuario por su ID.
+     * 
+     * @param idusuario El ID del usuario a buscar.
+     * @return Optional con el usuario encontrado o vacio si no se encuentra.
+     */
     @GetMapping("/buscarUsuarios/{idusuario}") 
     @PreAuthorize("hasAnyAuthority('ADMINISTRADOR', 'REGISTRADO')")
     public Optional<UsuarioVO> findUsuario(@PathVariable Integer idusuario) {
         return su.findById(idusuario);
     }          
-    
+
+    /**
+     * Metodo privado para devolver una respuesta de error.
+     * 
+     * @param message El mensaje de error.
+     * @param status El codigo de estado HTTP.
+     * @return ResponseEntity con el mensaje de error y el codigo de estado.
+     */
+    private ResponseEntity<?> errorResponse(String message, HttpStatus status) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", message);
+        return new ResponseEntity<>(response, status);
+    }
+
 }
 

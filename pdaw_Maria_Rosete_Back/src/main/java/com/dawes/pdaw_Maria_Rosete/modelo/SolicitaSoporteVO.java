@@ -14,8 +14,11 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-
-
+/**
+ * Clase que representa una solicitud de soporte realizada por un usuario para un material de curso.
+ * 
+ * @author Maria Rosete
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -24,23 +27,38 @@ import lombok.RequiredArgsConstructor;
 @Table(name="solicitasoporte", uniqueConstraints = {@UniqueConstraint (columnNames = {"idusuario", "idmaterial_curso"})})
 public class SolicitaSoporteVO {
     
+    /**
+     * Identificador unico de la solicitud de soporte.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idsolicitaSoporte;
     
+    /**
+     * Usuario que realiza la solicitud de soporte.
+     */
     @NonNull
     @ManyToOne
     @JoinColumn(name="idusuario")
     private UsuarioVO usuario;
     
+    /**
+     * Material de curso al que se refiere la solicitud de soporte.
+     */
     @NonNull
     @ManyToOne
-    @JoinColumn(name="idmaterial_curso") // Nombre de la columna que referencia al curso en materialcursos
+    @JoinColumn(name="idmaterial_curso") 
     private MaterialCursoVO materialCurso;
     
+    /**
+     * Descripción de la solicitud de soporte.
+     */
     @NonNull
     private String descripcion;
     
+    /**
+     * Respuesta a la solicitud de soporte.
+     */
     @NonNull
     private String respuesta;
 }

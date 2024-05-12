@@ -2,84 +2,69 @@ package com.dawes.pdaw_Maria_Rosete.servicios;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
-
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 
 import com.dawes.pdaw_Maria_Rosete.modelo.CursoVO;
 import com.dawes.pdaw_Maria_Rosete.modelo.InscripcionVO;
 import com.dawes.pdaw_Maria_Rosete.modelo.UsuarioVO;
 
+/**
+ * Interfaz que define los metodos para el servicio de inscripciones.
+ * 
+ * @author Maria Rosete
+ */
 public interface ServicioInscripcion {
-	
-	
-	Optional<InscripcionVO> findByUsuarioAndCurso(UsuarioVO usuario, CursoVO curso);
 
-	<S extends InscripcionVO> S save(S entity);
+    /**
+     * Busca una inscripcion por usuario y curso.
+     *
+     * @param usuario El usuario asociado a la inscripcion.
+     * @param curso   El curso asociado a la inscripcion.
+     * @return La inscripcion encontrada, o vacia si no se encuentra.
+     */
+    Optional<InscripcionVO> findByUsuarioAndCurso(UsuarioVO usuario, CursoVO curso);
 
-	<S extends InscripcionVO> List<S> saveAll(Iterable<S> entities);
+    /**
+     * Guarda una inscripcion en la base de datos.
+     *
+     * @param entity La inscripcion a guardar.
+     * @return La inscripcion guardada.
+     */
+    <S extends InscripcionVO> S save(S entity);
 
-	<S extends InscripcionVO> Optional<S> findOne(Example<S> example);
+    /**
+     * Obtiene todas las inscripciones.
+     *
+     * @return Una lista de todas las inscripciones.
+     */
+    List<InscripcionVO> findAll();
 
-	List<InscripcionVO> findAll(Sort sort);
+    /**
+     * Busca una inscripcion por su ID.
+     *
+     * @param id El ID de la inscripcion a buscar.
+     * @return La inscripcion encontrada, o vacia si no se encuentra.
+     */
+    Optional<InscripcionVO> findById(Integer id);
 
-	void flush();
+    /**
+     * Elimina una inscripcion por su ID.
+     *
+     * @param id El ID de la inscripcion a eliminar.
+     */
+    void deleteById(Integer id);
 
-	Page<InscripcionVO> findAll(Pageable pageable);
+    /**
+     * Busca todas las inscripciones asociadas a un usuario.
+     *
+     * @param usuario El usuario asociado a las inscripciones.
+     * @return Una lista de inscripciones asociadas al usuario.
+     */
+    Iterable<InscripcionVO> findByUsuario(UsuarioVO usuario);
 
-	<S extends InscripcionVO> S saveAndFlush(S entity);
-
-	<S extends InscripcionVO> List<S> saveAllAndFlush(Iterable<S> entities);
-
-	List<InscripcionVO> findAll();
-
-	List<InscripcionVO> findAllById(Iterable<Integer> ids);
-
-	void deleteInBatch(Iterable<InscripcionVO> entities);
-
-	<S extends InscripcionVO> Page<S> findAll(Example<S> example, Pageable pageable);
-
-	Optional<InscripcionVO> findById(Integer id);
-
-	void deleteAllInBatch(Iterable<InscripcionVO> entities);
-
-	boolean existsById(Integer id);
-
-	<S extends InscripcionVO> long count(Example<S> example);
-
-	void deleteAllByIdInBatch(Iterable<Integer> ids);
-
-	<S extends InscripcionVO> boolean exists(Example<S> example);
-
-	void deleteAllInBatch();
-
-	InscripcionVO getOne(Integer id);
-
-	<S extends InscripcionVO, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction);
-
-	long count();
-
-	void deleteById(Integer id);
-
-	InscripcionVO getById(Integer id);
-
-	void delete(InscripcionVO entity);
-
-	void deleteAllById(Iterable<? extends Integer> ids);
-
-	InscripcionVO getReferenceById(Integer id);
-
-	void deleteAll(Iterable<? extends InscripcionVO> entities);
-
-	<S extends InscripcionVO> List<S> findAll(Example<S> example);
-
-	<S extends InscripcionVO> List<S> findAll(Example<S> example, Sort sort);
-
-	void deleteAll();
-
-	Iterable<InscripcionVO> findByUsuario(UsuarioVO usuario);
+    /**
+     * Elimina todas las inscripciones asociadas a un usuario.
+     *
+     * @param idUsuario El ID del usuario cuyas inscripciones se eliminaran.
+     */
+    void eliminarInscripcionesUsuario(Integer idUsuario);
 }

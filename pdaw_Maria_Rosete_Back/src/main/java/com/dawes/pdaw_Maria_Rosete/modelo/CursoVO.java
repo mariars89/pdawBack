@@ -12,35 +12,42 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-
+/**
+ * Clase que representa un curso.
+ * 
+ * @author Maria Rosete
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Data
 @Entity
-
-
-
 @Table(name="cursos")
 public class CursoVO {
-	
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(unique=true)
-	private int idcurso;
-	@NonNull
-	private String descripcion;
-	@NonNull
-	private String categoria;
-	@NonNull
-	/*@Column(unique=true)*/
-	private String titulo;
-	
-	
-	/*@OneToMany(mappedBy = "curso")
-	private List <InscripcionVO> inscripciones;
-	@OneToMany(mappedBy = "curso")
-	private List <MaterialCursoVO> materialcursos;*/
-
+    
+    /**
+     * Identificador unico del curso.
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique=true)
+    private int idcurso;
+    
+    /**
+     * Descripcion del curso.
+     */
+    @NonNull
+    private String descripcion;
+    
+    /**
+     * Categoria del curso.
+     */
+    @NonNull
+    private String categoria;
+    
+    /**
+     * Titulo del curso.
+     */
+    @NonNull
+    private String titulo;
 }

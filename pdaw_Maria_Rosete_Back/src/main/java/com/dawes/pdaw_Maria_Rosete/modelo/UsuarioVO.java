@@ -16,13 +16,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Clase que representa un usuario del sistema.
+ * 
+ * @author Maria Rosete
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -33,29 +37,50 @@ public class UsuarioVO implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Identificador unico del usuario.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique=true)
     private int idusuario;
 
+    /**
+     * Nombre del usuario.
+     */
     @NonNull
     private String nombre;
 
+    /**
+     * Apellidos del usuario.
+     */
     @NonNull
     private String apellidos;
 
+    /**
+     * Correo electronico del usuario.
+     */
     @NonNull
     @Column(unique=true)
     private String correo;
 
+    /**
+     * Contrasena del usuario.
+     */
     @NonNull
     private String password;
 
+    /**
+     * Rol del usuario.
+     */
     @NonNull 
     @ManyToOne
     @JoinColumn(name="idrol")
     private RolVO rol;
-    
+
+    /**
+     * Metodo que devuelve los roles del usuario como autoridades.
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         GrantedAuthority authority = new SimpleGrantedAuthority(rol.getNombre().name());
@@ -63,43 +88,53 @@ public class UsuarioVO implements UserDetails {
         authorities.add(authority);
         return authorities;
     }
-    @Transient // Esta anotación indica que este campo no debe ser persistido en la BBDD
-    private List<GrantedAuthority> authorities;
-    
 
-    public void setAuthorities(List<GrantedAuthority> authorities) {
-        this.authorities = authorities;
-    }
-
-
+    /**
+     * Metodo que devuelve la contrasena del usuario.
+     */
     @Override
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Metodo que devuelve el correo electronico del usuario como nombre de usuario.
+     */
     @Override
     public String getUsername() {
         return correo;
     }
 
+    /**
+     * Metodo que indica si la cuenta del usuario ha expirado (siempre devuelve true).
+     */
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    /**
+     * Metodo que indica si la cuenta del usuario está bloqueada (siempre devuelve true).
+     */
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    /**
+     * Metodo que indica si las credenciales del usuario han expirado (siempre devuelve true).
+     */
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    /**
+     * Metodo que indica si el usuario esta habilitado (siempre devuelve true).
+     */
     @Override
     public boolean isEnabled() {
         return true;
-    }	   
-    
+    }       
 }
+

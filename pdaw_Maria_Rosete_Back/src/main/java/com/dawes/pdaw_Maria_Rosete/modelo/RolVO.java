@@ -14,26 +14,32 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Clase que representa un rol de usuario.
+ * 
+ * @author Maria Rosete
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Data
 @Entity
-
 @Table(name="roles")
 public class RolVO {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idrol;
-	@NonNull
-	@Column(unique=true)
-	@Enumerated(EnumType.STRING)
-	private NombreRol nombre;
-	
-	
-	
-
     
+    /**
+     * Identificador unico del rol.
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idrol;
+    
+    /**
+     * Nombre del rol.
+     */
+    @NonNull
+    @Column(unique=true)
+    @Enumerated(EnumType.STRING)
+    private NombreRol nombre;
 }
 

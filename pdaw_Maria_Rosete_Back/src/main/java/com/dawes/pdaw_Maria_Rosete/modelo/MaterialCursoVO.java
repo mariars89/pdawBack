@@ -16,6 +16,11 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Clase que representa un material asociado a un curso.
+ * 
+ * @author Maria Rosete
+ */
 @Entity
 @Table(name = "materialcursos")
 @Data
@@ -24,6 +29,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MaterialCursoVO {
 
+    /**
+     * Enumeracion que define los tipos de material disponibles.
+     */
     public enum TipoMaterial {
         PDF(0),
         VIDEO(1),
@@ -42,26 +50,47 @@ public class MaterialCursoVO {
         }
     }
 
+    /**
+     * Identificador unico del material del curso.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idmaterialCurso;
 
+    /**
+     * Nombre del material.
+     */
     @NonNull
     @Column(unique = true)
     private String nombre;
 
+    /**
+     * Tipo de material.
+     */
     @NonNull
     @Enumerated(EnumType.ORDINAL)
     private TipoMaterial tipoMaterial;
 
+    /**
+     * URL del material.
+     */
     @NonNull
     private String url;
 
+    /**
+     * Curso al que pertenece el material.
+     */
     @NonNull
     @ManyToOne
-    @JoinColumn(name = "curso_idcurso") // Nombre de la columna que referencia al curso en materialcursos
+    @JoinColumn(name = "curso_idcurso")
     private CursoVO curso;
 
+    /**
+     * Constructor para inicializar el nombre, tipo de material y URL del material.
+     * @param nombre El nombre del material.
+     * @param tipoMaterial El tipo de material.
+     * @param url La URL del material.
+     */
     public MaterialCursoVO(@NonNull String nombre, @NonNull TipoMaterial tipoMaterial, @NonNull String url) {
         this.nombre = nombre;
         this.tipoMaterial = tipoMaterial;
