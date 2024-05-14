@@ -14,7 +14,7 @@
 	<name>pdaw_Maria_Rosete_Tokens</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -93,14 +93,26 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<executable>true</executable>
-				</configuration>
-			</plugin>
-		</plugins>
+        <!-- Configuración del plugin maven-compiler-plugin -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version> <!-- Versión que funcionaba para ti -->
+            <configuration>
+                <source>1.8</source> <!-- Versión de Java que estás utilizando -->
+                <target>1.8</target> <!-- Versión de Java que estás utilizando -->
+            </configuration>
+        </plugin>
+
+        <!-- Configuración del plugin spring-boot-maven-plugin -->
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+                <executable>true</executable>
+            </configuration>
+        </plugin>
+    </plugins>
 	</build>
 
 
