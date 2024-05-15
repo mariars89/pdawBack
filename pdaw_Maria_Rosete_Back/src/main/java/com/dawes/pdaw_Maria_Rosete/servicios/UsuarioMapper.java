@@ -20,16 +20,8 @@ public interface UsuarioMapper {
      * @param usuario El usuario a convertir.
      * @return El usuario convertido a DTO.
      */
-	@Mapping(source = "rol.nombre", target = "rol")
-    @Mapping(target = "clave", ignore = true)
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "token", ignore = true)
+    @Mapping(source = "rol.nombre", target = "rol")
     UsuarioDTO toUsuarioDTO(UsuarioVO usuario);
-
-    @Mapping(target = "authorities", ignore = true)
-    @Mapping(target = "idusuario", ignore = true)
-    @Mapping(source = "rol", target = "rol")
-    UsuarioVO toUsuario(UsuarioDTO usuarioDTO);
 
     /**
      * Convierte un objeto de tipo UsuarioDTO a UsuarioVO.
@@ -37,7 +29,8 @@ public interface UsuarioMapper {
      * @param usuarioDTO El DTO de usuario a convertir.
      * @return El DTO de usuario convertido a entidad.
      */
-    
-}
+    @Mapping(target = "authorities", ignore = true)
+    UsuarioVO toUsuario(UsuarioDTO usuarioDTO);
 
+}
 
