@@ -30,8 +30,8 @@ public interface UsuarioMapper {
      * @param usuarioDTO El DTO de usuario a convertir.
      * @return El DTO de usuario convertido a entidad.
      */
-	 @Mapping(source = "id", target = "idusuario")
-	 @Mapping(target = "authorities", ignore = true)
+	@Mapping(source = "id", target = "idusuario")
+    @Mapping(target = "authorities", ignore = true)
     public UsuarioVO toUsuario(UsuarioDTO usuarioDTO);
 
 }

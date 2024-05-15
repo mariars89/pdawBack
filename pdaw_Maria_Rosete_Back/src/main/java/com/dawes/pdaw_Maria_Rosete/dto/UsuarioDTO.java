@@ -23,7 +23,6 @@ public class UsuarioDTO {
 	     * El nombre del usuario.
 	     */
 	    @NotNull
-	    @NotBlank
 	    private String nombre;
 	    
 	    /**
@@ -43,7 +42,6 @@ public class UsuarioDTO {
 	     * La contraseña del usuario.
 	     */
 	    @NotNull
-	    @NotBlank
 	    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	    private String password;
 	    
