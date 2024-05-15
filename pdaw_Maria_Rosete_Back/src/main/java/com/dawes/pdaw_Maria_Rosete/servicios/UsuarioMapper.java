@@ -21,7 +21,7 @@ public interface UsuarioMapper {
      * @return El usuario convertido a DTO.
      */
     @Mapping(source = "rol.nombre", target = "rol")
-    public UsuarioDTO toUsuarioDTO(UsuarioVO usuario);
+    UsuarioDTO toUsuarioDTO(UsuarioVO usuario);
 
     /**
      * Convierte un objeto de tipo UsuarioDTO a UsuarioVO.
@@ -29,9 +29,9 @@ public interface UsuarioMapper {
      * @param usuarioDTO El DTO de usuario a convertir.
      * @return El DTO de usuario convertido a entidad.
      */
-    @Mapping(source = "rol", target = "rol")
     @Mapping(target = "authorities", ignore = true)
-    public UsuarioVO toUsuario(UsuarioDTO usuarioDTO);
+    UsuarioVO toUsuario(UsuarioDTO usuarioDTO);
 
 }
+
 
