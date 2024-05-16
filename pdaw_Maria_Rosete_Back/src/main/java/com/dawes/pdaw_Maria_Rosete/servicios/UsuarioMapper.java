@@ -9,7 +9,7 @@ import com.dawes.pdaw_Maria_Rosete.modelo.UsuarioVO;
 /**
  * Interfaz que define métodos para mapear entre objetos DTO y entidades de Usuario.
  * 
- * @author Maria Rosete
+ * @autor Maria Rosete
  */
 @Mapper(componentModel = "spring")
 public interface UsuarioMapper {
@@ -30,7 +30,8 @@ public interface UsuarioMapper {
      * @return El DTO de usuario convertido a entidad.
      */
     @Mapping(target = "authorities", ignore = true)
+    @Mapping(target = "idusuario", ignore = true)
+    @Mapping(source = "rol", target = "rol")
     UsuarioVO toUsuario(UsuarioDTO usuarioDTO);
-
 }
 
