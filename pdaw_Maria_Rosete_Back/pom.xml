@@ -120,13 +120,14 @@
             </plugin>
             
             <plugin>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-maven-plugin</artifactId>
-    <version>2.6.3</version> <!-- Asegúrate de usar la versión correcta -->
-    <configuration>
-        <mainClass>com.dawes.pdaw_Maria_Rosete.Application</mainClass>
-    </configuration>
-</plugin>
+			    <groupId>org.springframework.boot</groupId>
+			    <artifactId>spring-boot-maven-plugin</artifactId>
+			    <version>2.6.3</version> <!-- Asegúrate de usar la versión correcta -->
+			    <configuration>
+			        <mainClass>com.dawes.pdaw_Maria_Rosete.PdawMariaRoseteTokensApplication</mainClass>
+			    </configuration>
+			</plugin>
+
 
         </plugins>
     </build>
