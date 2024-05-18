@@ -106,7 +106,7 @@ public class InscripcionWS {
      * @return Iterable con todas las inscripciones.
      */
     @GetMapping("/buscarInscripciones")
-    @PreAuthorize("hasAuthority('REGISTRADO')")
+    @PreAuthorize("hasAnyAuthority('ADMINISTRADOR', 'REGISTRADO')")
     public Iterable listaInscripciones(){
         return si.findAll();
     }
