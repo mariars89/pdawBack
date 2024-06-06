@@ -48,7 +48,7 @@ public interface ServicioCurso {
      * @param titulo El titulo del curso a buscar.
      * @return Una lista de cursos que coinciden con el titulo especificado.
      */
-    Iterable<CursoVO> findByTitulo(String titulo);
+    Iterable<CursoVO> findByTituloContainingIgnoreCase(String titulo);
     
     /**
      * Busca cursos por categoria.

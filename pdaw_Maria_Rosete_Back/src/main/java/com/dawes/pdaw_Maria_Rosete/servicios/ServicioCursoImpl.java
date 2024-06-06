@@ -69,9 +69,10 @@ public class ServicioCursoImpl implements ServicioCurso {
      * @return Una lista de cursos que coinciden con el titulo especificado.
      */
     @Override
-    public Iterable<CursoVO> findByTitulo(String titulo) {
-        return ar.findByTitulo(titulo);
-    }
+	public Iterable<CursoVO> findByTituloContainingIgnoreCase(String titulo) {
+		// TODO Auto-generated method stub
+		return ar.findByTituloContainingIgnoreCase(titulo);
+	}
 
     /**
      * Busca cursos por categoria.
@@ -83,5 +84,7 @@ public class ServicioCursoImpl implements ServicioCurso {
     public Iterable<CursoVO> findByCategoria(String categoria) {
         return ar.findByCategoria(categoria);
     }
+
+	
 }
 

@@ -1,6 +1,8 @@
 package com.dawes.pdaw_Maria_Rosete.repositorio;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.dawes.pdaw_Maria_Rosete.modelo.CursoVO;
@@ -29,7 +31,8 @@ public interface CursoRepository extends JpaRepository<CursoVO, Integer> {
      * @param titulo El titulo del curso a buscar.
      * @return Una coleccion iterable de cursos que tienen el titulo proporcionado.
      */
-    Iterable<CursoVO> findByTitulo(String titulo);
+    @Query("SELECT c FROM CursoVO c WHERE LOWER(c.titulo) LIKE LOWER(CONCAT('%', :titulo, '%'))")
+    Iterable<CursoVO> findByTituloContainingIgnoreCase(@Param("titulo") String titulo);
 
     /**
      * Busca cursos por su categoria.

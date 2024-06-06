@@ -144,13 +144,13 @@ public class CursoWS {
      * @return Una lista de cursos encontrados por titulo y un estado HTTP 200 si la operacion se realiza con exito, 
      *         o un mensaje de error y un estado HTTP 500 si ocurre algun problema.
      */
-    @GetMapping("/buscarCursosPorTitulo/{titulo}") 
+    @GetMapping("/buscarCursosPorTitulo/{titulo}")
     public ResponseEntity<?> buscarCursosPorTitulo(@PathVariable String titulo) {
         try {
             Iterable<CursoVO> cursos;
             
             if (titulo != null) {
-                cursos = sc.findByTitulo(titulo);
+                cursos = sc.findByTituloContainingIgnoreCase(titulo);
             } else {
                 cursos = sc.findAll();
             }
